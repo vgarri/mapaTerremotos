@@ -45,19 +45,17 @@ async function obtainData() {
     resultados = data.features;
     titulo = resultados.map(feature => feature.properties.title);
     fecha = resultados.map(feature => feature.properties.time);
-    fechaConv = new Date(fecha).toString();
-
-
+    fechaConv = fecha.map(fech => Date(fech * 1000).toString());
     ubicacion = resultados.map(feature => feature.geometry.coordinates);
     codigo = resultados.map(feature => feature.properties.code);
     magnitud = resultados.map(feature => feature.properties.mag);
 
-    return { resultados, titulo, fecha, ubicacion, codigo, magnitud }
+    return { resultados, titulo, fecha, ubicacion, codigo, magnitud,fechaConv }
 
 }
 async function injectMap() {
     await obtainData();
-    console.log(fechaConv);
+    
 
     for (let i = 0; i < ubicacion.length; i++) {
         magnitud[i] > 0 && magnitud[i] < 1 ? varIcon = icon0 : "";
@@ -69,23 +67,14 @@ async function injectMap() {
         magnitud[i] > 6 && magnitud[i] < 7 ? varIcon = icon6 : "";
         magnitud[i] > 7 && magnitud[i] < 8 ? varIcon = icon7 : "";
 
-
-
         const marcadores = new L.Marker([ubicacion[i][1], ubicacion[i][0]],{icon: varIcon}).addTo(map)
         let popupContent = `<p>Título<br />${titulo[i]}</p>
                         <p>Ubicación<br />${[ubicacion[i]]}</p>
                         <p>Código<br />${codigo[i]}</p>
-                        <p>Fecha<br />${fecha[i]}</p>
+                        <p>Fecha<br />${fechaConv[i]}</p>
                         <p>Magnitud en escala Richter:<br />${magnitud[i]}</p>`
-        marcadores.bindPopup(popupContent).openPopup()
-         
-      
-
-       
-        
+        marcadores.bindPopup(popupContent).openPopup() 
     }
-
-
 
 }
 injectMap();
