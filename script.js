@@ -42,7 +42,7 @@ let varIcon;
 async function obtainData() {
     let response = await fetch("https://earthquake.usgs.gov/earthquakes/feed/v1.0/summary/all_day.geojson");
     let data = await response.json();
-    resultados = data.features;
+    resultados = data.features;//se puede hacer con forEach solo iterando una vez features. Refactorizar.
     titulo = resultados.map(feature => feature.properties.title);
     fecha = resultados.map(feature => feature.properties.time);
     fechaConv = fecha.map(fech => Date(fech * 1000).toString());
@@ -50,7 +50,7 @@ async function obtainData() {
     codigo = resultados.map(feature => feature.properties.code);
     magnitud = resultados.map(feature => feature.properties.mag);
 
-    return { resultados, titulo, fecha, ubicacion, codigo, magnitud,fechaConv }
+    //return { resultados, titulo, fecha, ubicacion, codigo, magnitud,fechaConv }
 
 }
 async function injectMap() {
