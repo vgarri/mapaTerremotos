@@ -7,14 +7,27 @@ let codigo;
 let magnitud;
 let resultados;
 let fechaConv;
-
+//Ejercicio 1
 if ("geolocation" in navigator) {
     navigator.geolocation.getCurrentPosition(position => {
-        console.log(`Latitud: ${position.coords.latitude}\nLongitud: ${position.coords.longitude}`);
+         console.log(`Latitud: ${position.coords.latitude}\nLongitud: ${position.coords.longitude}`);
+        let datos = `<h1>Aquí estás!</h1>
+        <p>Lat: ${position.coords.latitude.toFixed(4)}</p>
+        <p>Long: ${position.coords.longitude.toFixed(4)}</p>`
+        document.querySelector("map2");
     });
 } else {
-    console.warn("Tu navegador no soporta Geolocalización!! ");
+  console.warn("Tu navegador no soporta Geolocalización!! ");
 }
+
+const mapId = 'map2';
+const initialCoordinates = [40.4169473, -3.7057172]; // Plaza Sol en Madrid [lat, lng]
+const map2 = L.map(mapId).setView(initialCoordinates, 13);
+
+
+
+
+
 let LeafIcon = L.Icon.extend({
     options: {
         iconUrl: '/assets/0.png',
@@ -90,39 +103,4 @@ var Stadia_AlidadeSmoothDark = L.tileLayer('https://tiles.stadiamaps.com/tiles/a
     attribution: '&copy; <a href="https://www.stadiamaps.com/" target="_blank">Stadia Maps</a> &copy; <a href="https://openmaptiles.org/" target="_blank">OpenMapTiles</a> &copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors',
     ext: 'png'
 });
-
-
-
-
-// //colores
-// async function colores() {
-//     await obtainData();
-//     for (let j = 0; j < ubicacion.length; j++) {
-//         if (magnitud[j] > 0 && magnitud[j] < 1) {
-//             return "white";
-//         } else if (magnitud[j] > 1 && magnitud[j] < 2) {
-//             return "green";
-//         } else if (magnitud[j] > 2 && magnitud[j] < 3) {
-//             return "light-green";
-//         } else if (magnitud[j] > 3 && magnitud[j] < 4) {
-//             return "yellow";
-//         } else if (magnitud[j] > 4 && magnitud[j] < 5) {
-//             return "dark-yellow";
-//         }  else if (magnitud[j] > 5 && magnitud[j] < 6) {
-//             return "orange";
-//         }   else if (magnitud[j] > 6 && magnitud[j] < 7) {
-//         return "red";
-//         } else if (magnitud[j] >= 7) {
-//         return "purple";
-//     }
-// }
-
-// }
-// colores();
-// Clase para crear iconos
-
-// Creación de iconos
-
-
-// Pintar en el DOM
 
